@@ -1,15 +1,29 @@
 {
   "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "cross-env": "^7.0.3",
+    "cssnano": "^7.0.6",
+    "npm-run-all2": "^7.0.0",
+    "postcss": "^8.4.47",
+    "postcss-cli": "^11.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-refresh": "^0.14.2",
-    "shadow-cljs": "^2.28.18"
+    "shadow-cljs": "^2.28.18",
+    "tailwindcss": "^3.4.14"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.9",
     "jotai": "^2.10.1"
   },
   "scripts": {
     "server": "shadow-cljs -A:dev server",
-    "dev": "shadow-cljs -A:dev watch app"
+    "shadow:watch": "shadow-cljs watch app",
+    "shadow:release": "shadow-cljs release app",
+    "postcss:build": "cross-env postcss src/css/tailwind.css -o ./public/css/main.css --verbose",
+    "postcss:watch": "cross-env postcss src/css/tailwind.css -o ./public/css/main.css --verbose -w",
+    "postcss:release": "cross-env NODE_ENV=production postcss src/css/tailwind.css -o ./public/css/main.css --verbose",
+    "dev": "run-p -l *:watch",
+    "release": "run-s *:release"
   }
 }
