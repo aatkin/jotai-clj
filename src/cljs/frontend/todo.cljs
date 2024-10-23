@@ -10,7 +10,7 @@
 
 (defui todo-item [{:keys [id]}]
   (let [[todo set-todo!] (use-atom (get-todo-state id))]
-    ($ :li.todo {:on-click #(set-todo! update :done not)}
+    ($ :li.todo {:on-click (fn [] (set-todo! update :done not))}
        ($ :span
           (cond->> (str "Todo: " id)
             (:done todo)
@@ -26,6 +26,5 @@
 
 (defui new-todo-button []
   (let [set-todo-list! (use-set-atom todo-list)]
-    ($ :button {:on-click #(set-todo-list! (fn [todos]
-                                             (conj todos (inc (count todos)))))}
+    ($ :button {:on-click (fn [] (set-todo-list! #(conj % (inc (count %)))))}
        "New todo")))

@@ -18,7 +18,7 @@
    (jotai-utils/atomFamily (fn [^js o] (jotai-atom (-> (js->clj o :keywordize-keys true)
                                                        init-atom-fn))))))
 
-(defn- set-atom [set-atom-fn f & args]
+(defn set-atom [set-atom-fn f & args]
   (set-atom-fn
    #(-> (js->clj % :keywordize-keys true)
         (as-> m (apply f m args))
@@ -44,3 +44,12 @@
   (let [[state set-state!] (jotai/useAtom a)]
     [(js->clj state :keywordize-keys true)
      (partial set-atom set-state!)]))
+
+(defn debug-get-atom [^js store ^js a]
+  (-> (store.get a)
+      (js->clj :keywordize-keys true)))
+
+(defn debug-set-atom [^js store ^js a f]
+  (store.set a #(-> (js->clj % :keywordize-keys true)
+                    (as-> m (f m))
+                    clj->js)))
