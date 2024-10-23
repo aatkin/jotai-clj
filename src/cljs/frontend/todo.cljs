@@ -1,23 +1,24 @@
 (ns frontend.todo
-  (:require [uix.core :refer [defui $]]
-            [frontend.state-util :refer [jotai-atom jotai-atom-family use-atom use-atom-value use-set-atom]]))
+  (:require ["jotai" :as jotai]
+            ["jotai/utils" :as jotai-utils]
+            [uix.core :refer [defui $]]))
 
 (defonce get-todo-state
-  (jotai-atom-family (constantly {:done false})))
+  (jotai-utils/atomFamily #(jotai/atom {:done false})))
 
 (defonce todo-list
-  (jotai-atom []))
+  (jotai/atom []))
 
 (defui todo-item [{:keys [id]}]
-  (let [[todo set-todo!] (use-atom (get-todo-state id))]
-    ($ :li.todo {:on-click (fn [] (set-todo! update :done not))}
+  (let [[todo set-todo!] (jotai/useAtom (get-todo-state id))]
+    ($ :li.todo {:on-click (fn [] (set-todo! #(update % :done not)))}
        ($ :span
           (cond->> (str "Todo: " id)
             (:done todo)
             ($ :s))))))
 
 (defui render-todos []
-  (let [todos (use-atom-value todo-list)]
+  (let [todos (jotai/useAtomValue todo-list)]
     (when (seq todos)
       ($ :ul
          (for [id todos]
@@ -25,6 +26,6 @@
                          :key id}))))))
 
 (defui new-todo-button []
-  (let [set-todo-list! (use-set-atom todo-list)]
+  (let [set-todo-list! (jotai/useSetAtom todo-list)]
     ($ :button {:on-click (fn [] (set-todo-list! #(conj % (inc (count %)))))}
        "New todo")))

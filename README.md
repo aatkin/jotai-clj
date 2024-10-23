@@ -23,7 +23,7 @@ Clojure/Script example app using [UIx](https://github.com/pitch-io/uix) and [Jot
 - I wanted to try a "more native" solution, since UIx (and shadow-cljs) make it easy to interop with JS libraries.
 - I have previously used [Recoil](https://github.com/facebookexperimental/Recoil) which is very much similar to Jotai, but Recoil has not seen new releases since 03/2023, and quite a few questions about project abandonment have gone unanswered.
 - `re-frame` is based on Reagent, and to my taste it has a bit too much ceremony. I have used re-frame almost exclusively for past 3+ years.
-- Jotai was easy to get started with. The wrapper functions in this repo just make it easier to compose e.g. setter functions.
+- Jotai was easy to get started with. ~~The wrapper functions in this repo just make it easier to compose e.g. setter functions.~~ There is even no need to wrap Jotai atoms or setter functions.
 - Jotai has some familiar API from Recoil. For example, atom family is a technique for "subscribing" to atoms dynamically (useful for e.g. infinite scrolling with editable components).
 - Ability to query and manipulate atoms via store object works quite nice in REPL workflows.
 

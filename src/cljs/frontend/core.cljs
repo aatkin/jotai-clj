@@ -2,18 +2,17 @@
   (:require ["jotai" :as jotai]
             [uix.core :refer [defui $]]
             [uix.dom]
-            [frontend.todo]
-            [frontend.state-util]))
+            [frontend.todo]))
 
 (defonce ^{:doc "Root-level store for all Jotai atoms. Useful for debugging."} store
   (jotai/createStore))
 
 (comment
-  (def debug-get-atom (partial frontend.state-util/debug-get-atom store))
+  (defn- debug-get-atom [^js a] (store.get a))
   (debug-get-atom frontend.todo/todo-list)
   (debug-get-atom (frontend.todo/get-todo-state 1))
 
-  (def debug-set-atom (partial frontend.state-util/debug-set-atom store))
+  (defn- debug-set-atom [^js a f] (store.set a f))
   (-> (frontend.todo/get-todo-state 1)
       (debug-set-atom #(update % :done not))))
 
