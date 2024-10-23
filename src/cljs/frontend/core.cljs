@@ -9,7 +9,7 @@
 
 (comment
   (defn- debug-get-atom [^js a] (store.get a))
-  (debug-get-atom frontend.todo/todo-list)
+  (debug-get-atom frontend.todo/all-todos)
   (debug-get-atom (frontend.todo/get-todo-state 1))
 
   (defn- debug-set-atom [^js a f] (store.set a f))
@@ -19,10 +19,11 @@
 (defui app []
   ($ uix.core/strict-mode
      ($ jotai/Provider {:store store}
-        ($ :<>
-           ($ :h1 "Todo")
+        ($ :div#app.mx-4
+           ($ :h1.text-2xl "The TODO application")
            ($ frontend.todo/new-todo-button)
-           ($ frontend.todo/render-todos)))))
+           ($ frontend.todo/render-todos)
+           ($ frontend.todo/render-done-todos)))))
 
 (defonce root
   (uix.dom/create-root (js/document.getElementById "root")))
