@@ -17,34 +17,19 @@
   (debug-atom (frontend.todo/get-todo-state 1)))
 
 (defui app []
-  ($ :<>
-     ($ :h1 "UIx & Jotai app")
-     ($ :div
-        ($ frontend.todo/new-todo-button))
-     ($ frontend.todo/render-todos)))
+  ($ uix.core/strict-mode
+     ($ jotai/Provider {:store store}
+        ($ :<>
+           ($ :h1 "UIx & Jotai app")
+           ($ :div
+              ($ frontend.todo/new-todo-button))
+           ($ frontend.todo/render-todos)))))
 
 (defonce root
-  (uix.dom/create-root (js/document.getElementById "app")))
+  (uix.dom/create-root (js/document.getElementById "root")))
 
 (defn mount []
-  (js/console.log "mount")
-  (->> root
-       (uix.dom/render-root ($ uix.core/strict-mode
-                               ($ jotai/Provider {:store store}
-                                  ($ app))))))
+  (uix.dom/render-root ($ app) root))
 
-;; start is called by init and after code reloading finishes
-(defn ^:dev/after-load start []
-  (js/console.log "start")
+(defn ^:export init []
   (mount))
-
-(defn init []
-  ;; init is called ONCE when the page loads
-  ;; this is called in the index.html and must be exported
-  ;; so it is available even in :advanced release builds
-  (js/console.log "init")
-  (start))
-
-;; this is called before any code is reloaded
-(defn ^:dev/before-load stop []
-  (js/console.log "stop"))

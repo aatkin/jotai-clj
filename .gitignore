@@ -1,5 +1,6 @@
 .calva/
 .clj-kondo/
+.cpcache/
 .lsp/
 .portal/
 .shadow-cljs/

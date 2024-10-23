@@ -39,8 +39,8 @@ This runs the `shadow-cljs` server process which all following commands will tal
 
 The first startup takes a bit of time since it has to download all the dependencies and do some prep work. Once this is running we can get started.
 
-```txt
-npm run watch
+```bash
+npm run dev
 ```
 
 This will begin the compilation of the configured `:app` build and re-compile whenever you change a file.
