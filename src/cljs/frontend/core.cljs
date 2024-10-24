@@ -21,7 +21,7 @@
      ($ jotai/Provider {:store store}
         ($ :div#app.mx-4
            ($ :h1.text-2xl "The TODO application")
-           ($ frontend.todo/new-todo-button)
+           ($ frontend.todo/new-todo)
            ($ frontend.todo/render-todos)
            ($ frontend.todo/render-done-todos)))))
 
