@@ -9,7 +9,9 @@
 
 (comment
   (defn- debug-get-atom [^js a] (store.get a))
-  (debug-get-atom frontend.todo/all-todos)
+  (debug-get-atom frontend.todo/!all-todo-ids)
+  (debug-get-atom frontend.todo/!todos)
+  (debug-get-atom frontend.todo/!dones)
   (debug-get-atom (frontend.todo/get-todo-state 1))
 
   (defn- debug-set-atom [^js a f] (store.set a f))
